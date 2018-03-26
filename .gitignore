@@ -1,0 +1,9 @@
+# Mac OSX Finder files.
+.DS_Store
+
+# ignore docker iota
+iota/ixi
+iota/mainnetdb
+
+# ignore docker bigchaindb
+bigchaindb

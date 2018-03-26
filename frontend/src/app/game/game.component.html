@@ -1,0 +1,142 @@
+<div id="game">
+  <div id="gamerender" #gamerender></div>
+
+  <div id="mainmenu">
+
+    <div id="status" *ngIf="convertMinsToHrsMins(currentTime)!==undefined">
+      Time: {{ convertMinsToHrsMins(currentTime) }}
+      <br>
+      Score: {{ currentScore }}
+    </div>
+
+    <div id="status-buttons">
+      <div class="button-part" (click)="toggleAllMachines()">
+        <div><img src="assets/UI/Icon_main_All.png"></div>
+        <div>All machines</div>
+      </div>
+      <div class="button-part" (click)="toggleMyMachines()">
+        <div><img src="assets/UI/Icon_main_myMachines.png"></div>
+        <div>My machines</div>
+      </div>
+      <div class="button-part" (click)="toggleNewMachines()">
+        <div><img src="assets/UI/Icon_main_New.png"></div>
+        <div>New machine</div>
+      </div>
+    </div>
+  </div>
+
+  <div ngDraggable [handle]="allMachines" class="block" [preventDefaultEvent]=true *ngIf="showAllMachines">
+    <div #allMachines class="title">
+      <span>All machines</span>
+      <span (click)="toggleAllMachines()"><i class="far fa-times-circle"></i></span>
+    </div>
+    <div class="body">
+      <table>
+        <tr>
+          <th class="left">Type</th>
+          <th>Status</th>
+          <th>Needs</th>
+          <th>Has</th>
+          <th>Offers</th>
+        </tr>
+        <tr class="linerow" *ngFor="let key of getKeys(machines)">
+          <td class="clickable left" (click)="machineDetails = key">{{machines[key].type}}</td>
+          <td><div *ngIf="machines[key].state"><img src="/assets/UI/Icon_list_status.png">{{machines[key].state.status}}</div></td>
+          <td><div *ngIf="machines[key].state && machines[key].state.needs['Energy']"><img src="/assets/UI/Icon_list_items.png">{{machines[key].state.needs["Energy"]}}</div></td>
+          <td><div *ngIf="machines[key].state && machines[key].state.has['Energy']"><img src="/assets/UI/Icon_list_items.png">{{machines[key].state.has["Energy"]}}</div></td>
+          <td><div *ngIf="machines[key].state && machines[key].state.offers['Energy']"><img src="/assets/UI/Icon_list_items.png">{{machines[key].state.offers["Energy"]}}</div></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div ngDraggable [handle]="my" class="block" [preventDefaultEvent]=true *ngIf="logged && showMyMachines">
+    <div #my class="title">
+      <span>My machines</span>
+      <span (click)="toggleMyMachines()"><i class="far fa-times-circle"></i></span>
+    </div>
+    <div class="body">
+      <table>
+        <tr>
+          <th class="left">Type</th>
+          <th>Status</th>
+          <th>Needs</th>
+          <th>Has</th>
+          <th>Offers</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <ng-container *ngFor="let key of getKeys(machines)">
+          <tr class="linerow" *ngIf="machines[key].owner===loggedPublicKey">
+            <td class="clickable left" (click)="machineDetails = key">{{machines[key].type}}</td>
+            <td><div *ngIf="machines[key].state"><img src="/assets/UI/Icon_list_status.png">{{machines[key].state.status}}</div></td>
+            <td><div *ngIf="machines[key].state && machines[key].state.needs['Energy']"><img src="/assets/UI/Icon_list_items.png">{{machines[key].state.needs["Energy"]}}</div></td>
+            <td><div *ngIf="machines[key].state && machines[key].state.has['Energy']"><img src="/assets/UI/Icon_list_items.png">{{machines[key].state.has["Energy"]}}</div></td>
+            <td><div *ngIf="machines[key].state && machines[key].state.offers['Energy']"><img src="/assets/UI/Icon_list_items.png">{{machines[key].state.offers["Energy"]}}</div></td>
+            <td class="clickable">
+              <div *ngIf="machines[key].type==='OldFactoryMachine'" (click)="closeFactory(key)">Close</div>
+            </td>
+            <td class="clickable"><div *ngIf="machines[key].type!=='OldFactoryMachine'" (click)="removeMachine(key)">Remove</div></td>
+          </tr>
+        </ng-container>
+    </table>
+    </div>
+  </div>
+
+  <div ngDraggable [handle]="new" class="block" [preventDefaultEvent]=true *ngIf="logged && showNewMachines">
+    <div #new class="title">
+      <span>New machine</span>
+      <span (click)="toggleNewMachines()"><i class="far fa-times-circle"></i></span>
+    </div>
+    <div class="body">
+      <table>
+        <tr>
+          <th class="left">Type</th>
+        </tr>
+        <tr class="linerow" *ngFor="let machine of machinesNew">
+          <td class="clickable left" (click)="deployMachine(machine.type)">{{ machine.name }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div ngDraggable [handle]="machine" class="block" [preventDefaultEvent]=true *ngIf="machineDetails">
+    <div #machine class="title">
+      <span>Machine details</span>
+      <span (click)="machineDetails=false"><i class="far fa-times-circle"></i></span>
+    </div>
+    <div class="body">
+      <table>
+        <tr class="linerow" *ngIf="machines[machineDetails].data">
+          <td class="left">Location</td>
+          <td class="left">{{ getJSON(machines[machineDetails].data.loc) }}</td>
+        </tr>
+        <tr class="linerow" *ngIf="machines[machineDetails].data">
+          <td class="left">Delivery</td>
+          <td class="left">{{ getJSON(machines[machineDetails].data.del) }}</td>
+        </tr>
+        <tr class="linerow" *ngIf="machines[machineDetails].state">
+          <td class="left">Current</td>
+          <td class="left">{{ getJSON(machines[machineDetails].state.loc) }}</td>
+        </tr>
+        <tr class="linerow" *ngIf="machines[machineDetails].state">
+          <td class="left">Status</td>
+          <td class="left"><img src="/assets/UI/Icon_list_status.png">{{ machines[machineDetails].state.status }}</td>
+        </tr>
+        <tr class="linerow" *ngIf="machines[machineDetails].state && machines[machineDetails].state.has['Energy']">
+          <td class="left">Has</td>
+          <td class="left"><img src="/assets/UI/Icon_list_items.png">{{ machines[machineDetails].state.has['Energy'] }}</td>
+        </tr>
+        <tr class="linerow" *ngIf="machines[machineDetails].state && machines[machineDetails].state.offers['Energy']">
+          <td class="left">Offers</td>
+          <td class="left"><img src="/assets/UI/Icon_list_items.png">{{ machines[machineDetails].state.offers['Energy'] }}</td>
+        </tr>
+        <tr class="linerow" *ngIf="machines[machineDetails].state && machines[machineDetails].state.needs['Energy']">
+          <td class="left">Needs</td>
+          <td class="left"><img src="/assets/UI/Icon_list_items.png">{{ machines[machineDetails].state.needs['Energy'] }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</div>

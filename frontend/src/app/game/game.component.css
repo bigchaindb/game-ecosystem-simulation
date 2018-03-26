@@ -1,0 +1,101 @@
+#game {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+#game #mainmenu {
+  position: absolute;
+  top: 0;
+  height: 0px;
+  width: 100%;
+  z-index: 1;
+}
+#game #mainmenu #status{
+  position: absolute;
+  background-color: #111;
+}
+#game #mainmenu #status-buttons{
+  position: absolute;
+  left: 50%;
+  margin-left: -150px;
+}
+#game #mainmenu #status-buttons .button-part{
+  float: left;
+  width: 100px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 12px;
+  text-shadow:
+   -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+#game #mainmenu #status-buttons .button-part img{
+  margin: -12px -12px -18px -12px;
+}
+#game .block {
+  min-width: 300px;
+  opacity: 0.9;
+  z-index: 1;
+  position: absolute;
+  top: 10px;
+  left: 30%;
+  background-color: #333;
+  border: 1px solid #666;
+}
+#game .block .body {
+  resize: both;
+  overflow: auto;
+  min-width: 300px;
+  max-height: 85vh;
+  padding: 7px;
+}
+#game .block .body table {
+  width: 100%;
+  background-color: #222;
+  border: 1px solid #444;
+}
+#game .block .body td {
+  border: 1px solid #444;
+  padding: 0px 5px;
+  text-align: center;
+}
+#game .block .body th {
+  border: 1px solid #444;
+  padding: 0px 5px;
+  text-align: center;
+}
+#game .block .title {
+  background-color: #222;
+  border-bottom: 1px solid #444;
+  padding: 5px 15px;
+  text-transform: uppercase;
+}
+#game .block .title .fa-times-circle{
+  float: right;
+  margin-top: 5px;
+}
+#game .block .body .linerow {
+  margin: 5px;
+}
+#game .block .body .linerow .clickable{
+  cursor: pointer;
+}
+#game .block .body .left{
+  text-align: left;
+}
+#game .block .body td img{
+  height: 15px;
+  padding-right: 3px;
+}
+#game #status {
+  margin: 5px;
+  border: 1px solid #666;
+  opacity: 0.9;
+  padding: 5px;
+  background-color: #444;
+  border-radius: 3px;
+}

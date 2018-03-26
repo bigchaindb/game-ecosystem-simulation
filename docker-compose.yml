@@ -1,0 +1,79 @@
+version: "3.4"
+
+services:
+
+  frontend:
+    image: nginx
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend/
+    ports:
+      - "4000:4000"
+    depends_on:
+      - bigchaindb
+      - iota
+      - redis
+    environment:
+      - HOST_IOTA=iota
+      - HOST_BIGCHAINDB=bigchaindb
+      - HOST_REDIS=redis
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --save "" --appendonly no
+
+  mdb:
+    image: mongo:3.4.3
+    ports:
+      - "27017"
+    logging:
+      driver: none
+    command: mongod --replSet=bigchain-rs
+
+  bigchaindb:
+    image: bigchaindb/bigchaindb:1.3.0
+    depends_on:
+      - mdb
+    volumes:
+      - ./bigchaindb:/data
+    environment:
+      BIGCHAINDB_DATABASE_HOST: mdb
+      BIGCHAINDB_DATABASE_PORT: 27017
+      BIGCHAINDB_SERVER_BIND: 0.0.0.0:9984
+      BIGCHAINDB_DATABASE_BACKEND: mongodb
+      BIGCHAINDB_DATABASE_NAME: bigchain
+      BIGCHAINDB_KEYPAIR_PUBLIC: 8wHUvvraRo5yEoJAt66UTZaFq9YZ9tFFwcauKPDtjkGw
+      BIGCHAINDB_KEYPAIR_PRIVATE: 5C5Cknco7YxBRP9AgB1cbUVTL4FAcooxErLygw1DeG2D
+      BIGCHAINDB_DATABASE_REPLICASET: bigchain-rs
+      BIGCHAINDB_WSSERVER_SCHEME: ws
+      BIGCHAINDB_WSSERVER_HOST: 0.0.0.0
+      BIGCHAINDB_WSSERVER_PORT: 9985
+    ports:
+      - "9984:9984"
+      - "9985:9985"
+    command: start
+
+  iota:
+    image: iotaledger/iri:v1.4.2.2-testnet
+    container_name: iota_iri
+    hostname: iota
+    volumes:
+      - ./iota/iota.ini:/iri/iota.ini:ro
+      - ./iota/ixi:/iri/ixi:rw
+      - ./iota/mainnetdb:/iri/mainnetdb:rw
+    ports:
+      - "14600:14600/udp"
+      - "15600:15600/tcp"
+      - "14265:14265"
+      - "5556:5556"
+      - "9999:9999"
+      - "9998:9998"
+    command: ["/usr/bin/java", "-XX:+DisableAttachMechanism", "-Xmx2g", "-Xms512m", "-Xss256k", "-XX:MaxNewSize=512m", "-XX:+UseConcMarkSweepGC", "-XX:+CMSParallelRemarkEnabled", "-Dlogback.configurationFile=/iri/conf/logback.xml", "-Djava.net.preferIPv4Stack=true", "-jar", "iri.jar", "-c", "/iri/iota.ini", "--testnet"]

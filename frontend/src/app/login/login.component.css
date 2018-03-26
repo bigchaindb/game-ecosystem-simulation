@@ -1,0 +1,27 @@
+#login {
+  background-color: #222;
+  height: 100%;
+  color: #fff;
+}
+#login .container{
+  display: grid;
+  height: 100%;
+}
+#login .col-centered{
+  margin: auto;
+}
+#login form input {
+  border-radius: 0;
+}
+#login form button, button:focus, button:active:focus, button.active:focus{
+  outline:none;
+  box-shadow:none;
+  border: 1px solid #555;
+  border-radius: 0;
+  background-color: #444;
+}
+#login form{
+  padding: 15px;
+  background-color: #333;
+  border: 1px solid #555;
+}
