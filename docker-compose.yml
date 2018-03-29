@@ -13,6 +13,8 @@ services:
 
   backend:
     build: ./backend/
+    volumes:
+      - ./backend:/app
     ports:
       - "4000:4000"
     depends_on:
@@ -34,6 +36,8 @@ services:
     image: mongo:3.4.3
     ports:
       - "27017"
+    volumes:
+      - ./bigchaindb:/data/db
     logging:
       driver: none
     command: mongod --replSet=bigchain-rs
@@ -42,8 +46,6 @@ services:
     image: bigchaindb/bigchaindb:1.3.0
     depends_on:
       - mdb
-    volumes:
-      - ./bigchaindb:/data
     environment:
       BIGCHAINDB_DATABASE_HOST: mdb
       BIGCHAINDB_DATABASE_PORT: 27017
