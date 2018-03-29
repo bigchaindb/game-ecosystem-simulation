@@ -5,11 +5,18 @@ This is ecosystem simulation presented as a game using concepts like digital twi
 ## Quick development start
 
 1. Clone the repo
-2. Start needed services with ```docker-compose up redis bigchaindb```
-3. Initialize game world with ```npm run world``` from /backend and copy worldId to /frontend/src/app/app.config.ts and /backend/src/config.ts
-4. Start frontend with ```npm run start``` from /frontend
-5. Compile backend with ```npm run build``` or watch with ```npm run watch``` from /backend
-6. Start backend with ```npm run start``` from /backend
+2. Start needed services with `docker-compose up -d`
+3. Run `docker-compose exec backend bash`
+  1. run `npm install`
+  2. run `npm run world`
+  3. Open a text editor, and replace worldId with the results of `npm run world` into /frontend/src/app/app.config.ts and /backend/src/config.ts
+  4. back in the backend bash-tab, run `npm run build`
+4. `exit` the backend bash
+5. `cd` to the /frontend folder
+  1. run `npm install`
+  2. run `npm run build`
+6. `exit` the frontend bash
+7. Run `docker-compose restart` to restart all VMs, and go to [http://localhost](http://localhost)
 
 ### Modifying starting world
 
