@@ -8,10 +8,9 @@ This is ecosystem simulation presented as a game using concepts like digital twi
 2. Start needed services with `docker-compose up -d`
 3. Run `docker-compose exec backend bash`
 
-  1. run `npm install`
-  2. run `npm run world`
-  3. Open a text editor, and replace worldId with the results of `npm run world` into /frontend/src/app/app.config.ts and /backend/src/config.ts
-  4. back in the backend bash-tab, run `npm run build`
+  1. run `npm run world`
+  2. Open a text editor, and replace worldId with the results of `npm run world` into /frontend/src/app/app.config.ts and /backend/src/config.ts
+  3. back in the backend bash-tab, run `npm run build`
 
 4. `exit` the backend bash
 5. `cd` to the /frontend folder
