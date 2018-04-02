@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3"
 
 services:
 
@@ -12,7 +12,10 @@ services:
       - backend
 
   backend:
-    build: ./backend/
+    image: node
+    volumes:
+      - ./backend:/backend:ro
+    working_dir: /backend
     ports:
       - "4000:4000"
     depends_on:
@@ -23,6 +26,7 @@ services:
       - HOST_IOTA=iota
       - HOST_BIGCHAINDB=bigchaindb
       - HOST_REDIS=redis
+    command: npm run start
 
   redis:
     image: redis
