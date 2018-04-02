@@ -36,7 +36,6 @@
     "three": "0.89.0",
     "three-orbit-controls": "^82.1.0",
     "uuid": "^3.2.1",
-    "zeromq": "^4.6.0",
     "zone.js": "^0.8.20"
   },
   "devDependencies": {
