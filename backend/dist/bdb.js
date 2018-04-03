@@ -415,7 +415,7 @@ function getSortedTransactions(assetId) {
                 let tipTransaction = unspents[0];
                 let tipTransactionId = tipTransaction.inputs[0].fulfills.transaction_id;
                 const sortedTxList = [];
-                while (true) {
+                while (true) { // eslint-disable-line no-constant-condition
                     sortedTxList.push(tipTransaction);
                     try {
                         tipTransactionId = tipTransaction.inputs[0].fulfills.transaction_id;
