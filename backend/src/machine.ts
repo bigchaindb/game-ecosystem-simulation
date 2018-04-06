@@ -71,7 +71,7 @@ export default class Machine {
 
   moveTowards=(machineId)=>{
     let location
-    if(this.machines[machineId].machine !== undefined){
+    if(this.machines[machineId].machine === undefined){
       return
     }
     if(this.machines[machineId].machine.type === "TransportMachine"){

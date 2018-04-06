@@ -8,7 +8,8 @@ const config = require('./config')
 const construct = require('./construct')
 
 // number of cpus
-const numCPUs = require('os').cpus().length
+//const numCPUs = require('os').cpus().length
+const numCPUs = 2
 
 // env
 const env = process.env

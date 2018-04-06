@@ -46,6 +46,9 @@ class Machine {
         };
         this.moveTowards = (machineId) => {
             let location;
+            if (this.machines[machineId].machine !== undefined) {
+                return;
+            }
             if (this.machines[machineId].machine.type === "TransportMachine") {
                 location = this.machines[machineId].state.loc;
             }
