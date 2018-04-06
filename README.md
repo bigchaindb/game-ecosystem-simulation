@@ -16,7 +16,7 @@ This is ecosystem simulation presented as a game using concepts like digital twi
 ### Modifying starting world
 
 To wipe BigchainDB database use ```docker system prune --volumes``` and reload starting world again with ```npm run world```.
-```npm run world``` command executes file /backend/src/world.ts that has all starting identities.
+```npm run smallerworld``` command executes file /backend/src/smallerworld.ts that has all starting identities.
 
 ### Bugs and questions
 
