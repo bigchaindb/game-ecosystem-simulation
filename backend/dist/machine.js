@@ -55,6 +55,9 @@ class Machine {
             if (this.machines[machineId].machine.type === "EnergyTreeMachine") {
                 location = this.machines[machineId].machine.data.del;
             }
+            if (location === undefined) {
+                return;
+            }
             this.log("moving to:", location, "currently:", this.loc);
             let workingGrid = this.pathGrid.clone();
             let path = this.pathFinder.findPath(this.loc.x + this.gridOffset, this.loc.z + this.gridOffset, location.x + this.gridOffset, location.z + this.gridOffset, workingGrid);

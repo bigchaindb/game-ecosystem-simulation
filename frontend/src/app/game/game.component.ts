@@ -39,11 +39,11 @@ export class GameComponent implements OnInit {
 
   // options
   optionsMaxFPS = 24
-  optionsAntiAliasing = true // true - false
-  optionsAnisotropyFiltering = 16  // 0 - 16  -> "renderer.capabilities.getMaxAnisotropy()"
+  optionsAntiAliasing = false // true - false
+  optionsAnisotropyFiltering = 0  // 0 - 16  -> "renderer.capabilities.getMaxAnisotropy()"
   optionsPixelRatio = 1
-  optionsShaderPrecision = "highp" // "highp", "mediump" or "lowp"
-  optionsShadows = true // true - false
+  optionsShaderPrecision = "lowp" // "highp", "mediump" or "lowp"
+  optionsShadows = false // true - false
   optionsShadowsType = THREE.PCFSoftShadowMap // THREE.BasicShadowMap -> THREE.PCFShadowMap -> THREE.PCFSoftShadowMap
   optionsShadowDetail = 2
   optionsPhysicallyCorrectLights = false
