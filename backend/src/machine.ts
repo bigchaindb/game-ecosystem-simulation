@@ -80,6 +80,9 @@ export default class Machine {
     if(this.machines[machineId].machine.type === "EnergyTreeMachine"){
       location = this.machines[machineId].machine.data.del
     }
+    if(location === undefined){
+      return
+    }
     this.log("moving to:",location,"currently:",this.loc)
     let workingGrid = this.pathGrid.clone();
     let path = this.pathFinder.findPath(
