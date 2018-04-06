@@ -15,6 +15,6 @@ config.updatesIdentity = {
 config.updatesOverIota = false
 config.udpatesIotaAddress = "PHMKHHYVTAZDYJJQCQKLEKVOYLMDYUSNNKSDYUXXQQDASBDMGXVLTTAPPXOCMUUMAEW9GDU99T9MTWDBBXSMBNORQB"
 
-config.worldId = "667c024482c7d40908d53d701ed9d89d207b5a657f818b1d1dd957f55038a4c6"
+config.worldId = "eaffb547027b087a8d6a9ae9d4f7f90a650f683bc472a14d6e54ec40b4652645"
 
 module.exports = config

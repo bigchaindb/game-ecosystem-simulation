@@ -6,6 +6,7 @@
   "scripts": {
     "start": "cross-env DEBUG=Construct* node dist/index.js -—max-old-space-size=8192 -—max-new-space-size=2048 —-nouse-idle-notification",
     "world": "node dist/world.js",
+    "smallerworld": "node dist/smallerworld.js",
     "build": "gulp build",
     "watch": "gulp watch"
   },

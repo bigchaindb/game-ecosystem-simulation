@@ -9,7 +9,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - backend
+      - bigchaindb
 
   backend:
     image: node
@@ -20,7 +20,6 @@ services:
       - "4000:4000"
     depends_on:
       - bigchaindb
-      - iota
       - redis
     environment:
       - HOST_IOTA=iota
