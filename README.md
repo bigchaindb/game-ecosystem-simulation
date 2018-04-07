@@ -7,11 +7,12 @@ This is ecosystem simulation presented as a game using concepts like digital twi
 1. Clone the repo
 2. Do the ```npm install``` in /backend and /frontend
 3. Install angular-cli globally ```npm install -g @angular/cli```
-4. Start needed services with ```docker-compose up redis bigchaindb```
+4. Start needed services with ```docker-compose up bigchaindb```
 5. Initialize game world with ```npm run world``` from /backend and copy worldId to /frontend/src/app/app.config.ts and /backend/src/config.ts
-6. Compile backend with ```npm run build``` or watch with ```npm run watch``` from /backend
-7. Start frontend with ```npm run start``` from /frontend and navigate to ```http://localhost:4200/``` to see starting positions of the world.
-8. Start backend with ```npm run start``` from /backend
+6. Compile backend with ```npm run build``` from /backend
+7. Compile frontend with ```npm run build``` from /frontend
+8. Start whole system with ```docker-compose up```
+9. Navigate to ```localhost``` for game
 
 ### Modifying starting world
 
