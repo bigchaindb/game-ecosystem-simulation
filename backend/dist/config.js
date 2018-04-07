@@ -1,5 +1,4 @@
 var config = {};
-config.hostIOTA = process.env.HOST_IOTA ? process.env.HOST_IOTA : "127.0.0.1";
 config.hostBigchainDB = process.env.HOST_BIGCHAINDB ? process.env.HOST_BIGCHAINDB : "127.0.0.1";
 config.portBigchainDB = process.env.PORT_BIGCHAINDB ? process.env.PORT_BIGCHAINDB : "9984";
 config.hostRedis = process.env.HOST_REDIS ? process.env.HOST_REDIS : "127.0.0.1";
@@ -13,5 +12,5 @@ config.updatesIdentity = {
 };
 config.updatesOverIota = false;
 config.udpatesIotaAddress = "PHMKHHYVTAZDYJJQCQKLEKVOYLMDYUSNNKSDYUXXQQDASBDMGXVLTTAPPXOCMUUMAEW9GDU99T9MTWDBBXSMBNORQB";
-config.worldId = "eaffb547027b087a8d6a9ae9d4f7f90a650f683bc472a14d6e54ec40b4652645";
+config.worldId = "2593c0bb14611c6afe9599aaf99fab54eb0e260c6a07a828156671107ab83a2b";
 module.exports = config;

@@ -13,5 +13,5 @@ export const AppConfig = {
     wsHost: "127.0.0.1",
     wsPort: "9985",
   },
-  world:"eaffb547027b087a8d6a9ae9d4f7f90a650f683bc472a14d6e54ec40b4652645"
+  world:"2593c0bb14611c6afe9599aaf99fab54eb0e260c6a07a828156671107ab83a2b"
 };

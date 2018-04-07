@@ -252,6 +252,26 @@ export class BdbService {
   }
 
   // Creates a new asset in BigchainDB
+  async createNewAssetNoPull(keypair, asset, metadata) {
+    await this._getConnection()
+    const condition = driver.Transaction.makeEd25519Condition(keypair.publicKey, true)
+
+    const output = driver.Transaction.makeOutput(condition)
+    output.public_keys = [keypair.publicKey]
+
+    const transaction = driver.Transaction.makeCreateTransaction(
+      asset,
+      metadata,
+      [output],
+      keypair.publicKey
+    )
+
+    const txSigned = driver.Transaction.signTransaction(transaction, keypair.privateKey)
+    let tx
+    this.conn.postTransaction(txSigned)
+  }
+
+  // Creates a new asset in BigchainDB
   async createNewAssetWithOwner(keypair, publickey, asset, metadata) {
     await this._getConnection()
     const condition = driver.Transaction.makeEd25519Condition(publickey, true)

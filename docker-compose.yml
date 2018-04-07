@@ -1,9 +1,9 @@
-version: "3"
+version: "2.3"
 
 services:
 
   frontend:
-    image: nginx
+    image: nginx:alpine
     volumes:
       - ./frontend/dist:/usr/share/nginx/html:ro
     ports:
@@ -12,7 +12,8 @@ services:
       - bigchaindb
 
   backend:
-    image: node
+    image: node:alpine
+    cpu_shares: 50
     volumes:
       - ./backend:/backend:ro
     working_dir: /backend
@@ -21,14 +22,15 @@ services:
     depends_on:
       - bigchaindb
       - redis
+      - bdbproxy
     environment:
       - HOST_IOTA=iota
-      - HOST_BIGCHAINDB=bigchaindb
+      - HOST_BIGCHAINDB=bdbproxy
       - HOST_REDIS=redis
     command: npm run start
 
   redis:
-    image: redis
+    image: redis:alpine
     ports:
       - "6379:6379"
     command: redis-server --save "" --appendonly no
@@ -50,7 +52,7 @@ services:
     environment:
       BIGCHAINDB_DATABASE_HOST: mdb
       BIGCHAINDB_DATABASE_PORT: 27017
-      BIGCHAINDB_SERVER_BIND: 0.0.0.0:9984
+      BIGCHAINDB_SERVER_BIND: 0.0.0.0:49984
       BIGCHAINDB_DATABASE_BACKEND: mongodb
       BIGCHAINDB_DATABASE_NAME: bigchain
       BIGCHAINDB_KEYPAIR_PUBLIC: 8wHUvvraRo5yEoJAt66UTZaFq9YZ9tFFwcauKPDtjkGw
@@ -58,25 +60,19 @@ services:
       BIGCHAINDB_DATABASE_REPLICASET: bigchain-rs
       BIGCHAINDB_WSSERVER_SCHEME: ws
       BIGCHAINDB_WSSERVER_HOST: 0.0.0.0
-      BIGCHAINDB_WSSERVER_PORT: 9985
+      BIGCHAINDB_WSSERVER_PORT: 49985
+    ports:
+      - "49984:49984"
+      - "49985:49985"
+    command: start
+
+  bdbproxy:
+    image: nginx:alpine
+    volumes:
+      - ./bdbcache/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - bigchaindb
     ports:
       - "9984:9984"
       - "9985:9985"
-    command: start
-
-  iota:
-    image: iotaledger/iri:v1.4.2.2-testnet
-    container_name: iota_iri
-    hostname: iota
-    volumes:
-      - ./iota/iota.ini:/iri/iota.ini:ro
-      - ./iota/ixi:/iri/ixi:rw
-      - ./iota/mainnetdb:/iri/mainnetdb:rw
-    ports:
-      - "14600:14600/udp"
-      - "15600:15600/tcp"
-      - "14265:14265"
-      - "5556:5556"
-      - "9999:9999"
-      - "9998:9998"
-    command: ["/usr/bin/java", "-XX:+DisableAttachMechanism", "-Xmx2g", "-Xms512m", "-Xss256k", "-XX:MaxNewSize=512m", "-XX:+UseConcMarkSweepGC", "-XX:+CMSParallelRemarkEnabled", "-Dlogback.configurationFile=/iri/conf/logback.xml", "-Djava.net.preferIPv4Stack=true", "-jar", "iri.jar", "-c", "/iri/iota.ini", "--testnet"]
+    command: nginx -g 'daemon off;'

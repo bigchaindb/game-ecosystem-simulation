@@ -438,9 +438,8 @@ export class GameComponent implements OnInit {
         loc:{x:location.x,y:location.y,z:location.z},
         del:{x:delivery.x,y:delivery.y,z:delivery.z}
       }
-      this.bdbService.createNewAsset(keypair, asset, metadata).then((result)=>{
-        this.stopDeployingMachine()
-      })
+      this.bdbService.createNewAssetNoPull(keypair, asset, metadata)
+      this.stopDeployingMachine()
     }
   }
 
